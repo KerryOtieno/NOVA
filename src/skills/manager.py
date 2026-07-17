@@ -23,12 +23,22 @@ class SkillManager:
                 return self.apps.open_calculator()
 
         elif intent == "OPEN_FOLDER":
+
             return self.files.open_folder(target)
-        
+
         elif intent == "CREATE_FOLDER":
+
             return self.files.create_folder(target)
 
         elif intent == "CREATE_FILE":
-             return self.files.create_file(target)
 
-    
+            return self.files.create_file(target)
+
+        elif intent == "WRITE_FILE":
+
+            return self.files.write_file(
+                target["filename"],
+                target["content"]
+            )
+
+        return None

@@ -19,6 +19,7 @@ class FileSkills:
             folder_path = r"C:\Users\Kerry\Documents\NOVA"
 
         else:
+
             if folder not in self.folders:
                 return None
 
@@ -53,7 +54,21 @@ class FileSkills:
 
         file_path = os.path.join(documents, filename)
 
-        with open(file_path, "w", encoding="utf-8") as f:
+        with open(file_path, "w", encoding="utf-8"):
             pass
 
         return f"File '{filename}' created successfully."
+
+    def write_file(self, filename, content):
+
+        documents = os.path.join(
+            os.path.expanduser("~"),
+            "Documents"
+        )
+
+        file_path = os.path.join(documents, filename)
+
+        with open(file_path, "a", encoding="utf-8") as file:
+            file.write(content + "\n")
+
+        return f"I've written to '{filename}'."
