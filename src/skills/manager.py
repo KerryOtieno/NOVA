@@ -1,4 +1,5 @@
 from skills.apps import AppSkills
+from skills.files import FileSkills
 
 
 class SkillManager:
@@ -6,25 +7,28 @@ class SkillManager:
     def __init__(self):
 
         self.apps = AppSkills()
+        self.files = FileSkills()
 
-    def run(self, message):
+    def execute(self, intent, target):
 
-        text = message.lower()
+        if intent == "OPEN_APP":
 
-        if "open vscode" in text:
+            if target == "vscode":
+                return self.apps.open_vscode()
 
-            return self.apps.open_vscode()
+            if target == "notepad":
+                return self.apps.open_notepad()
 
-        if "open visual studio code" in text:
+            if target == "calculator":
+                return self.apps.open_calculator()
 
-            return self.apps.open_vscode()
+        elif intent == "OPEN_FOLDER":
+            return self.files.open_folder(target)
+        
+        elif intent == "CREATE_FOLDER":
+            return self.files.create_folder(target)
 
-        if "open notepad" in text:
+        elif intent == "CREATE_FILE":
+             return self.files.create_file(target)
 
-            return self.apps.open_notepad()
-
-        if "open calculator" in text:
-
-            return self.apps.open_calculator()
-
-        return None
+    
