@@ -84,4 +84,14 @@ class IntentEngine:
                 }
             )
 
-        return (None, None)
+        # -------------------------
+        # CREATE PYTHON PROJECT
+        # -------------------------
+
+        if "create python project" in text:
+
+            project = text.split("create python project")[-1]
+            project = project.replace("called", "").strip()
+
+            return ("CREATE_PROJECT", project)
+            return (None, None)

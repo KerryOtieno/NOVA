@@ -41,4 +41,8 @@ class SkillManager:
                 target["content"]
             )
 
+        elif intent == "CREATE_PROJECT":
+
+             return self.files.create_python_project(target)
+
         return None

@@ -72,3 +72,66 @@ class FileSkills:
             file.write(content + "\n")
 
         return f"I've written to '{filename}'."
+    
+    def create_python_project(self, project_name):
+
+        documents = os.path.join(
+           os.path.expanduser("~"),
+           "Documents"
+    )
+
+        project_path = os.path.join(documents, project_name)
+
+        folders = [
+           "src",
+           "tests",
+           "data",
+           "assets"
+    ]
+
+        for folder in folders:
+            os.makedirs(
+              os.path.join(project_path, folder),
+              exist_ok=True
+        )
+
+    # README
+        with open(
+            os.path.join(project_path, "README.md"),
+            "w",
+            encoding="utf-8"
+        ) as f:
+
+            f.write(f"# {project_name}\n\n")
+            f.write("Created by Nova.\n")
+
+    # requirements
+        with open(
+            os.path.join(project_path, "requirements.txt"),
+            "w",
+            encoding="utf-8"
+        ) as f:
+
+            f.write("")
+
+    # .gitignore
+        with open(
+            os.path.join(project_path, ".gitignore"),
+            "w",
+            encoding="utf-8"
+        ) as f:
+
+            f.write("__pycache__/\n")
+            f.write(".venv/\n")
+            f.write(".env\n")
+
+    # main.py
+        with open(
+            os.path.join(project_path, "src", "main.py"),
+            "w",
+            encoding="utf-8"
+        ) as f:
+
+            f.write('print("Hello from Nova!")\n')
+
+        return f"Python project '{project_name}' created successfully."
