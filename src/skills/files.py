@@ -1,3 +1,4 @@
+from importlib.metadata import files
 import os
 import subprocess
 
@@ -135,3 +136,32 @@ class FileSkills:
             f.write('print("Hello from Nova!")\n')
 
         return f"Python project '{project_name}' created successfully."
+    
+    def create_study_project(self, subject):
+
+            documents = os.path.join(
+                os.path.expanduser("~"),
+                "Documents"
+         )
+
+            project_path = os.path.join(documents, subject)
+
+            os.makedirs(project_path, exist_ok=True)
+
+            files = [
+                "notes.txt",
+                "revision.txt",
+                "questions.txt",
+                "formula_sheet.txt"
+    ]
+
+            for filename in files:
+
+                file_path = os.path.join(project_path, filename)
+
+                with open(file_path, "w", encoding="utf-8") as file:
+                    file.write(f"{subject}\n")
+                    file.write("=" * len(subject))
+                    file.write("\n\n")
+
+            return f"Study project '{subject}' created successfully."

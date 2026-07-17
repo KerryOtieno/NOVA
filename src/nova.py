@@ -6,6 +6,7 @@ from brain.intent import IntentEngine
 from memory.extractor import MemoryExtractor
 from memory.conversation import ConversationMemory
 from skills.manager import SkillManager
+from brain.planner import Planner
 
 
 class Nova:
@@ -14,7 +15,8 @@ class Nova:
         self.ai = AIManager()
         self.brain = Brain()
         self.intent = IntentEngine()
-
+        self.planner = Planner()
+        
         # Memory
         self.extractor = MemoryExtractor()
         self.conversation = ConversationMemory()
@@ -31,6 +33,28 @@ class Nova:
             self.personality = file.read()
 
     def chat(self, user_message):
+        
+        # ==========================
+        # Planner
+        # ==========================
+
+        plan = self.planner.plan(user_message)
+
+        if plan:
+
+            last_result = None
+
+            for intent, target in plan:
+
+                result = self.skills.execute(intent, target)
+
+                if result:
+                   print(f"[PLAN] {result}")
+
+                   last_result = result
+
+            if last_result:
+                return last_result
         """
         Nova's main processing pipeline.
 

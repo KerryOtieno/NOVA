@@ -15,10 +15,7 @@ class IntentEngine:
             "run"
         ]):
 
-            if "vscode" in text:
-                return ("OPEN_APP", "vscode")
-
-            if "visual studio code" in text:
+            if "vscode" in text or "visual studio code" in text:
                 return ("OPEN_APP", "vscode")
 
             if "notepad" in text:
@@ -85,13 +82,7 @@ class IntentEngine:
             )
 
         # -------------------------
-        # CREATE PYTHON PROJECT
+        # No Intent Found
         # -------------------------
 
-        if "create python project" in text:
-
-            project = text.split("create python project")[-1]
-            project = project.replace("called", "").strip()
-
-            return ("CREATE_PROJECT", project)
-            return (None, None)
+        return (None, None)

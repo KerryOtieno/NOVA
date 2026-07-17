@@ -44,5 +44,9 @@ class SkillManager:
         elif intent == "CREATE_PROJECT":
 
              return self.files.create_python_project(target)
+        
+        elif intent == "CREATE_STUDY_PROJECT":
+
+             return self.files.create_study_project(target)
 
         return None
