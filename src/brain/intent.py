@@ -1,3 +1,6 @@
+from pydoc import text
+
+
 class IntentEngine:
 
     def detect(self, message):
@@ -83,6 +86,47 @@ class IntentEngine:
 
         # -------------------------
         # No Intent Found
+        # -------------------------
+
+        # -------------------------
+        # READ FILE
+        # -------------------------
+
+        if text.startswith("read "):
+
+            filename = message[5:].strip()
+
+            return ("READ_FILE", filename)
+
+        # -------------------------
+        # APPEND TO FILE
+        # -------------------------
+
+        if text.startswith("append ") or text.startswith("add "):
+
+            if " to " in text:
+
+                if text.startswith("append "):
+                    content = message[7:message.lower().rfind(" to ")].strip()
+                else:
+                    content = message[4:message.lower().rfind(" to ")].strip()
+
+                filename = message[message.lower().rfind(" to ") + 4:].strip()
+
+                print("[DEBUG] APPEND DETECTED")
+                print("[DEBUG] Filename:", filename)
+                print("[DEBUG] Content:", content)
+
+                return (
+                    "APPEND_FILE",
+                    {
+                        "filename": filename,
+                        "content": content
+                    }
+                )
+
+        # -------------------------
+        # NO MATCH
         # -------------------------
 
         return (None, None)

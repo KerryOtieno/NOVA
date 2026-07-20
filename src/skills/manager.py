@@ -49,4 +49,15 @@ class SkillManager:
 
              return self.files.create_study_project(target)
 
+        elif intent == "READ_FILE":
+
+            return self.files.read_file(target)
+        
+        elif intent == "APPEND_FILE":
+
+            return self.files.append_file(
+                target["filename"],
+                target["content"]
+    )
+
         return None

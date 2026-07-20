@@ -1,3 +1,4 @@
+from fileinput import filename
 from importlib.metadata import files
 import os
 import subprocess
@@ -12,7 +13,53 @@ class FileSkills:
         "pictures": "Pictures",
         "music": "Music",
         "videos": "Videos",
+
     }
+
+    def append_file(self, filename, content):
+
+        documents = os.path.join(
+            os.path.expanduser("~"),
+            "Documents"
+    )
+
+    # Search recursively
+        for root, dirs, files in os.walk(documents):
+
+            if filename in files:
+
+                file_path = os.path.join(root, filename)
+
+                with open(file_path, "a", encoding="utf-8") as file:
+                    file.write(content + "\n")
+
+                return f"I've added the text to '{filename}'."
+
+        return f"I couldn't find '{filename}'."
+
+    def read_file(self, filename):
+
+        documents = os.path.join(
+            os.path.expanduser("~"),
+            "Documents"
+    )
+
+        for root, dirs, files in os.walk(documents):
+
+            if filename in files:
+
+                file_path = os.path.join(root, filename)
+
+            with open(file_path, "r", encoding="utf-8") as file:
+                content = file.read()
+
+            if content.strip():
+                return f"Contents of '{filename}':\n\n{content}"
+            else:
+                return f"'{filename}' is empty."
+
+        return f"I couldn't find '{filename}'."
+    
 
     def open_folder(self, folder):
 
@@ -139,29 +186,42 @@ class FileSkills:
     
     def create_study_project(self, subject):
 
-            documents = os.path.join(
-                os.path.expanduser("~"),
-                "Documents"
-         )
+        documents = os.path.join(
+            os.path.expanduser("~"),
+            "Documents"
+    )
 
-            project_path = os.path.join(documents, subject)
+        project_path = os.path.join(documents, subject)
 
-            os.makedirs(project_path, exist_ok=True)
+        os.makedirs(project_path, exist_ok=True)
 
-            files = [
-                "notes.txt",
-                "revision.txt",
-                "questions.txt",
-                "formula_sheet.txt"
+        files = [
+            "notes.txt",
+            "revision.txt",
+            "questions.txt",
+            "formula_sheet.txt"
     ]
 
-            for filename in files:
+        for filename in files:
 
-                file_path = os.path.join(project_path, filename)
+            file_path = os.path.join(project_path, filename)
 
-                with open(file_path, "w", encoding="utf-8") as file:
-                    file.write(f"{subject}\n")
-                    file.write("=" * len(subject))
-                    file.write("\n\n")
+            with open(file_path, "w", encoding="utf-8") as file:
 
-            return f"Study project '{subject}' created successfully."
+                file.write(f"{subject}\n")
+                file.write("=" * len(subject))
+                file.write("\n\n")
+
+                if filename == "notes.txt":
+                    file.write("Lecture Notes\n\n")
+
+                elif filename == "revision.txt":
+                    file.write("Revision Checklist\n\n")
+
+                elif filename == "questions.txt":
+                    file.write("Practice Questions\n\n")
+
+                elif filename == "formula_sheet.txt":
+                    file.write("Important Formulae\n\n")
+
+        return f"Study project '{subject}' created successfully."
